@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {query} from '../../../lib/db';import {requireUser} from '../../../lib/auth';
+export async function GET(){try{const u=await requireUser();if(u.role!=='ADMIN')throw Error('Bạn không có quyền xem nhật ký');return NextResponse.json(await query(`SELECT a.*,u.name user_name FROM audit_logs a LEFT JOIN users u ON u.id=a.user_id ORDER BY a.id DESC LIMIT 300`))}catch(e){return NextResponse.json({error:e.message},{status:e.message==='UNAUTHORIZED'?401:400})}}

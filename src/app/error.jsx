@@ -1,0 +1,2 @@
+'use client';
+export default function ErrorPage({error,reset}){return <main className="auth"><div className="authcard"><div className="logo">⚠️</div><h1>Có lỗi xảy ra</h1><p>{error?.message||'Không thể tải trang.'}</p><button className="primary widebtn" onClick={()=>reset()}>Thử lại</button><a className="secondary widebtn" style={{textAlign:'center',marginTop:8}} href="/">Về trang chính</a></div></main>}

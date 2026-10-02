@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {query} from '../../../../lib/db';import {requireUser,audit} from '../../../../lib/auth';
+export async function PUT(req,{params}){try{const u=await requireUser();await query("UPDATE fines SET status='PAID',paid_at=NOW() WHERE id=? AND status='UNPAID'",[params.id]);await audit(u,'PAY','FINE',params.id,'Thanh toán tiền phạt');return NextResponse.json({ok:true})}catch(e){return NextResponse.json({error:e.message},{status:e.message==='UNAUTHORIZED'?401:400})}}

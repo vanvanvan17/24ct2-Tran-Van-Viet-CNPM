@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {query} from '../../../lib/db';import {requireUser} from '../../../lib/auth';
+export async function GET(){try{await requireUser();return NextResponse.json(await query(`SELECT pm.*,p.supplier,b.title book_title FROM payments pm JOIN purchases p ON p.id=pm.purchase_id JOIN books b ON b.id=p.book_id ORDER BY pm.id DESC`))}catch(e){return NextResponse.json({error:e.message},{status:e.message==='UNAUTHORIZED'?401:400})}}

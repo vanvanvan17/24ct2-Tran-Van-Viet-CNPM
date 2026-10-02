@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {query} from '../../../lib/db';import {requireUser} from '../../../lib/auth';
+export async function GET(){try{await requireUser();return NextResponse.json(await query(`SELECT f.*,r.name reader_name FROM fines f JOIN readers r ON r.id=f.reader_id ORDER BY f.id DESC`))}catch(e){return NextResponse.json({error:e.message},{status:e.message==='UNAUTHORIZED'?401:400})}}
